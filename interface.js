@@ -5,10 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         document.querySelector('#temperature').innerText = data.temperature;
       })
-      .catch((error) => {
+      .catch(() => {
         console.log('error..oops')
       })
-  }
+  };
 
   document.querySelector('#select-city').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -22,36 +22,40 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         document.querySelector('#current-temperature').innerText = data.main.temp;
       })
-  })
+  });
 
   // const thermostat = new Thermostat();
   updateTemperature();
 
   document.querySelector('#temperature-up').addEventListener('click', () => {
-    fetch('http://localhost:9292/up', { method: 'POST' }).then((res) => {
+    fetch('http://localhost:9292/up', { method: 'POST' }).then(() => {
       updateTemperature();
     })
   });
 
-  // document.querySelector('#temperature-down').addEventListener('click', () => {
-  //   thermostat.down();
-  //   updateTemperature();
-  // });
+  document.querySelector('#temperature-down').addEventListener('click', () => {
+    fetch('http://localhost:9292/down', { method: 'POST' }).then(() => {
+      updateTemperature();
+    })
+  });
 
-  // document.querySelector('#temperature-reset').addEventListener('click', () => {
-  //   thermostat.resetTemperature();
-  //   updateTemperature();
-  // });
+  document.querySelector('#temperature-reset').addEventListener('click', () => {
+    fetch('http://localhost:9292/reset', { method: 'POST' }).then(() => {
+      updateTemperature();
+    })
+  });
 
-  // document.querySelector('#powersaving-on').addEventListener('click', () => {
-  //   thermostat.setPowerSavingMode(true);
-  //   document.querySelector('#power-saving-status').innerText = 'on';
-  //   updateTemperature();
-  // })
+  document.querySelector('#powersaving-on').addEventListener('click', () => {
+    fetch('http://localhost:9292/powersaving-on', { method: 'POST' }).then(() => {
+      document.querySelector('#power-saving-status').innerText = 'on';
+      updateTemperature();
+    })
+  });
 
-  // document.querySelector('#powersaving-off').addEventListener('click', () => {
-  //   thermostat.setPowerSavingMode(false);
-  //   document.querySelector('#power-saving-status').innerText = 'off';
-  //   updateTemperature();
-  // })
+  document.querySelector('#powersaving-off').addEventListener('click', () => {
+    fetch('http://localhost:9292/powersaving-off', { method: 'POST' }).then(() => {
+      document.querySelector('#power-saving-status').innerText = 'off';
+      updateTemperature();
+    })
+  });
 });

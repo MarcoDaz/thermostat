@@ -28,31 +28,33 @@ app.get('/temperature', (req, res) => {
 // Implement a route POST /up to increase the temperature.
 app.post('/up', (req, res) => {
   thermostat.up();
-  res.redirect('/temperature');
+  res.send('POST succeeded')
 });
 
 // Implement a route POST /down to decrease the temperature.
 app.post('/down', (req, res) => {
   thermostat.down();
-  res.redirect('/temperature');
+  res.send('POST succeeded')
 });
 
-// POST /powersaving to alternate powersavingmode
-app.post('/powersaving', (req, res) => {
-  if (req.body.mode === 'true') {
-    thermostat.setPowerSavingMode(true);
-  }
-  else {
-    thermostat.setPowerSavingMode(false);
-  };
+// POST /powersaving-on
+app.post('/powersaving-on', (req, res) => {
+  thermostat.setPowerSavingMode(true);
 
-  res.redirect('/temperature');
+  res.send('POST succeeded')
+});
+
+// POST /powersaving-off
+app.post('/powersaving-off', (req, res) => {
+  thermostat.setPowerSavingMode(false);
+  
+  res.send('POST succeeded')
 });
 
 // Implement a route DELETE /temperature to reset the thermostat.
-app.delete('/temperature', (req, res) => {
-  thermostat = new Thermostat();
-  res.redirect('/temperature');
+app.post('/reset', (req, res) => {
+  thermostat.resetTemperature();
+  res.send('POST succeeded')
 });
 
 console.log(`Server listening on localhost:${port}`);

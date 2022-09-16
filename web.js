@@ -9,6 +9,13 @@ app.use(express.urlencoded({ extended: false }));
 
 let thermostat = new Thermostat();
 
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next()
+});
+
+
 // Implement a route GET /temperature to print the thermostat temperature.
 app.get('/temperature', (req, res) => {
   const info = {
